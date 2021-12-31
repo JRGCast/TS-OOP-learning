@@ -1,79 +1,43 @@
 // Crie a dinâmica de uma concessionária que vende um carro para alguém
+import { Car, Person, Concessionarie } from './classesObj'
+import MotorCycle from './classesObj/classMotorcycle'
 
-class Car {
-  private model: string;
-  private year: number;
-  private doors: number;
-  private maxSpeed: number;
-  private currSpeed: number = 0;
-  constructor(model: string, year: number, doors: number = 2, maxSpeed: number = 200, currSpeed: number = 0) {
-    this.model = model;
-    this.year = year;
-    this.doors = doors;
-    this.maxSpeed = maxSpeed;
-    this.currSpeed = currSpeed;
-  }
-  public accelerate(): void {
-    this.currSpeed += 10;
-  }
-  public deaccelerate(): void {
-    this.currSpeed -= 10;
-  }
-  public getCurrSpeed(): number {
-    return this.currSpeed;
-  }
-}
+const separateRows = () => console.log('------------------')
 
-let carrA = new Car('Corsa', 2000)
-console.log(carrA)
-carrA.accelerate() // 10
-carrA.accelerate() // 20
-carrA.accelerate() // 30
-carrA.accelerate() // 40
-console.log(carrA)
+// 1- Criando carros:
+let carrA = new Car('Corsa', 2000, 2, 180)
+let carrB = new Car('Veloster', 2015, 4, 250)
+let carrC = new Car('Parati', 1999, 4, 190)
+// console.log(carrA)
+// carrA.accelerate() // 10
+// carrA.accelerate() // 20
+// carrA.accelerate() // 30
+// carrA.accelerate() // 40
+// console.log(carrA)
 
+// 2- Montar lista de carros da concessionária: 
+let carList1: Array<Car> /* também poderia ser Car[]*/ = [carrA, carrB, carrC]
 
-class Concessionarie {
-  private address: string
-  private carList: any //poderá receber qualquer dado
-
-  constructor(address: string) {
-    this.address = address
-  }
-
-  public showAddress(): string {
-    return this.address
-  }
-
-  public showCarList(): any {
-    return this.carList
-  }
-}
-
-class Person {
-  private name: string;
-  private age: number;
-  private preferredCar: string;
-  private currCar: any;
-  constructor(name: string, age: number, preferredCar: string, currCar: any) {
-    this.name = name;
-    this.age = age;
-    this.preferredCar = preferredCar;
-    this.currCar = currCar;
-  }
-  sayName(): string {
-   return (`My name is ${ this.name }`)
-  }
-  sayPreferredCar(): string {
-   return (`My prefered car is ${ this.preferredCar }`)
-  }
-  sayCurrCar(): string {
-   return (`My current car is ${ this.currCar }`)
-  }
-  buyCar(car: any = ''): string {
-   return car !== '' ? `I bought a new car! It's ${ car }` : 'Did not bought'
-  }
-}
-
+// 3- Instanciando concessionária:
+let concess1 = new Concessionarie('Rua Mocotó, KM 745', carList1, 'Segunda a Sexta, das 8h às 18h')
+console.log(concess1.showBusinessTime())
+separateRows()
+// 4- Mostrando a lista de carros:
+console.log(concess1.showCarList())
+separateRows()
+// 5- Instanciando um cliente:
 let person1 = new Person('John', 29, 'Veloster', 'Fox')
-console.log(person1.sayName(), person1.sayCurrCar(), person1.sayPreferredCar(), person1.buyCar('Golf'))
+console.log(person1.sayName())
+console.log(person1.sayCurrCar(), person1.sayPreferredCar())
+separateRows()
+// 6- Verificando se o carro preferido do cliente existe na lista da concessionária:
+concess1.showCarList().forEach((car: Car) => {
+  if (person1.sayPreferredCar().includes(car['model'])) console.log(person1.buyCar(car));
+})
+console.log(person1.sayCurrCar())
+separateRows()
+// 7- Instanciando uma moto
+let moto1 = new MotorCycle('Ninja', 2010)
+moto1.accelerate()
+console.log(moto1)
+separateRows()
